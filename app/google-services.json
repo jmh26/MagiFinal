@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "833102044647",
+    "project_id": "magifinal-262bd",
+    "storage_bucket": "magifinal-262bd.appspot.com",
+    "firebase_url": "https://magifinal-262bd-default-rtdb.europe-west1.firebasedatabase.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:833102044647:android:d90afdeaac2dad70b2f142",
+        "android_client_info": {
+          "package_name": "com.example.magifinal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAITKmGqnnRpJua9jXYzL9OzP3zLG3EOrk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
