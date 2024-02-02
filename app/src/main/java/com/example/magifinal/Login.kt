@@ -7,6 +7,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
@@ -41,9 +42,9 @@ class Login: AppCompatActivity() {
             val contra = etContra.text.toString()
 
             if (email.isNotEmpty() && contra.isNotEmpty() && email == "admin" && contra == "admin") {
-                Toast.makeText(this, "Bienvenido administrador", Toast.LENGTH_SHORT)
-                    .show()
 
+
+                loginUser(email, contra)
 
             } else if (email.isNotEmpty() && contra.isNotEmpty()) {
 
@@ -63,14 +64,18 @@ class Login: AppCompatActivity() {
         auth.signInWithEmailAndPassword(email, contra)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-
                     val currentUser: FirebaseUser? = auth.currentUser
-                    if (currentUser != null) {
+                    val userId = currentUser?.uid
+                    val rol = Utilidades.obtenerRol(email, contra, auth)
+                    if(userId != null){
 
-
+                        Utilidades.crearUsuario(userId,email, contra, rol)
                         startActivity(Intent(this, MainActivity::class.java))
                         finish()
                     }
+
+
+
                 } else {
                     Toast.makeText(this, "Error al iniciar sesión", Toast.LENGTH_SHORT).show()
                 }
@@ -79,11 +84,14 @@ class Login: AppCompatActivity() {
         val sharedPref = getSharedPreferences("login", MODE_PRIVATE)
         val editor = sharedPref.edit()
 
-        if (email == "admin" && contra == "admin") {
+        if (email.trim() == "admin" && contra.trim() == "admin") {
             editor.putString("rol", "admin")
         } else {
             editor.putString("rol", "usuario")
         }
         editor.apply()
     }
+
+
 }
+

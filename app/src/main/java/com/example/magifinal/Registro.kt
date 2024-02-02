@@ -34,11 +34,12 @@ class Registro: AppCompatActivity() {
         registro = findViewById(R.id.btConfirmar)
 
         registro.setOnClickListener {
-            val etEmail = etEmail.text.toString()
-            val etContra = etContra.text.toString()
 
-            if (etEmail.isNotEmpty() && etContra.isNotEmpty()) {
-                registerUser(etEmail, etContra)
+            val email = etEmail.text.toString()
+            val contra = etContra.text.toString()
+
+            if (email.isNotEmpty() && contra.isNotEmpty()) {
+                registerUser(email, contra)
             } else {
                 Toast.makeText(this, "Por favor, rellena todos los campos", Toast.LENGTH_SHORT)
                     .show()
@@ -52,12 +53,15 @@ class Registro: AppCompatActivity() {
 
 
 
-    private fun registerUser(id: String,email: String, contra: String) {
+    private fun registerUser(email: String, contra: String) {
         auth.createUserWithEmailAndPassword(email, contra)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     user = auth.currentUser
-                    Utilidades.crearUsuario(id,email, contra)
+                    val userId = user?.uid
+                    if(userId != null){
+                        Utilidades.crearUsuario(userId, email, contra, "usuario")
+                    }
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
 
