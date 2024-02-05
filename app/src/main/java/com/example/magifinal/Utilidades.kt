@@ -14,11 +14,13 @@ class Utilidades {
             db_ref.child("Tienda").child("Usuarios").child(FirebaseAuth.getInstance().currentUser!!.uid).setValue(usuario)
         }
 
-
+        fun esAdmin(email: String, contra: String): Boolean {
+            return email == "administrador@gmail.com" && contra == "administrador"
+        }
 
         fun obtenerRol(email:String, contra: String, auth: FirebaseAuth): String{
-            return if (email == "admin" && contra == "admin") {
-                "admin"
+            return if (email == "administrador@gmail.com" && contra == "administrador") {
+                "administrador"
             }else{
                 "usuario"
             }

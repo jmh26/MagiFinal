@@ -2,6 +2,7 @@ package com.example.magifinal
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -41,14 +42,14 @@ class Login: AppCompatActivity() {
             val email = etEmail.text.toString()
             val contra = etContra.text.toString()
 
-            if (email.isNotEmpty() && contra.isNotEmpty() && email == "admin" && contra == "admin") {
+            if (email.isNotEmpty() && contra.isNotEmpty()) {
+                if (Utilidades.esAdmin(email, contra)) {
+                    loginUser(email, contra)
+                }else{
+                    loginUser(email, contra)
+                }
 
 
-                loginUser(email, contra)
-
-            } else if (email.isNotEmpty() && contra.isNotEmpty()) {
-
-                loginUser(email, contra)
 
             } else {
                 Toast.makeText(this, "Por favor, rellena todos los campos", Toast.LENGTH_SHORT)
@@ -60,6 +61,8 @@ class Login: AppCompatActivity() {
 
     }
 
+
+
     private fun loginUser(email: String, contra: String) {
         auth.signInWithEmailAndPassword(email, contra)
             .addOnCompleteListener(this) { task ->
@@ -70,6 +73,7 @@ class Login: AppCompatActivity() {
                     if(userId != null){
 
                         Utilidades.crearUsuario(userId,email, contra, rol)
+                        Log.d("Login", "Usuario logueado como: $rol")
                         startActivity(Intent(this, MainActivity::class.java))
                         finish()
                     }
@@ -77,6 +81,7 @@ class Login: AppCompatActivity() {
 
 
                 } else {
+                    Log.e("Login", "Error al iniciar sesión: ${task.exception?.message}")
                     Toast.makeText(this, "Error al iniciar sesión", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -84,8 +89,8 @@ class Login: AppCompatActivity() {
         val sharedPref = getSharedPreferences("login", MODE_PRIVATE)
         val editor = sharedPref.edit()
 
-        if (email.trim() == "admin" && contra.trim() == "admin") {
-            editor.putString("rol", "admin")
+        if (Utilidades.esAdmin(email, contra)) {
+            editor.putString("rol", "administrador")
         } else {
             editor.putString("rol", "usuario")
         }

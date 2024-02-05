@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -22,16 +23,21 @@ class Registro: AppCompatActivity() {
     private lateinit var etEmail: EditText
     private lateinit var etContra: EditText
     private lateinit var registro: Button
+    private lateinit var yaTengoCuenta: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registro)
         auth = FirebaseAuth.getInstance()
 
-
+        yaTengoCuenta = findViewById(R.id.tvYaTengoCuenta)
         etEmail = findViewById(R.id.etEmail)
         etContra = findViewById(R.id.etContrasena)
         registro = findViewById(R.id.btConfirmar)
+
+        yaTengoCuenta.setOnClickListener {
+            startActivity(Intent(this, Login::class.java))
+        }
 
         registro.setOnClickListener {
 
@@ -60,7 +66,12 @@ class Registro: AppCompatActivity() {
                     user = auth.currentUser
                     val userId = user?.uid
                     if(userId != null){
-                        Utilidades.crearUsuario(userId, email, contra, "usuario")
+                       val rol = if (Utilidades.esAdmin(email, contra)) {
+                           "administrador"
+                       }else{
+                           "usuario"
+                       }
+                        Utilidades.crearUsuario(userId, email, contra, rol)
                     }
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
