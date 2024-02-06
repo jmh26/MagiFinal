@@ -22,17 +22,24 @@
             </intent-filter>
 
         </activity>
+
+        <activity
+            android:name=".HomeCliente"
+            android:exported="false">
+
+        </activity>
+        <activity
+            android:name=".HomeAdmin"
+            android:exported="false">
+
+        </activity>
         <activity
             android:name=".Registro"
             android:exported="false">
 
 
         </activity>
-        <activity
-            android:name=".MainActivity"
-            android:exported="false">
 
-        </activity>
     </application>
 
 </manifest>

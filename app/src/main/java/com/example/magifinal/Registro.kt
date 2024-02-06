@@ -19,7 +19,7 @@ import com.google.firebase.database.ValueEventListener
 
 class Registro: AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
-    private var user: FirebaseUser?=null
+    private var user: FirebaseUser? = null
     private lateinit var etEmail: EditText
     private lateinit var etContra: EditText
     private lateinit var registro: Button
@@ -57,32 +57,40 @@ class Registro: AppCompatActivity() {
     }
 
 
-
-
     private fun registerUser(email: String, contra: String) {
         auth.createUserWithEmailAndPassword(email, contra)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     user = auth.currentUser
                     val userId = user?.uid
-                    if(userId != null){
-                       val rol = if (Utilidades.esAdmin(email, contra)) {
-                           "administrador"
-                       }else{
-                           "usuario"
-                       }
+                    if (userId != null) {
+                        val rol = if (Utilidades.esAdmin(email, contra)) {
+                            "administrador"
+
+                        } else {
+                            "usuario"
+                        }
                         Utilidades.crearUsuario(userId, email, contra, rol)
+
+                        if (rol == "usuario") {
+                            startActivity(Intent(this, HomeCliente::class.java))
+
+                        } else {
+                            startActivity(Intent(this, HomeAdmin::class.java))
+                        }
+
+
+
+
+                        Toast.makeText(this, "Usuario registrado correctamente", Toast.LENGTH_SHORT)
+                            .show()
+
+                    } else {
+                        Toast.makeText(this, "Error al crear el usuario", Toast.LENGTH_SHORT).show()
                     }
-                    startActivity(Intent(this, MainActivity::class.java))
-                    finish()
-
-                        Toast.makeText(this, "Usuario registrado correctamente", Toast.LENGTH_SHORT).show()
-
-                } else {
-                    Toast.makeText(this, "Error al crear el usuario", Toast.LENGTH_SHORT).show()
                 }
+
+
             }
-
-
     }
 }

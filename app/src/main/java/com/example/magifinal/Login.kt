@@ -45,10 +45,9 @@ class Login: AppCompatActivity() {
             if (email.isNotEmpty() && contra.isNotEmpty()) {
                 if (Utilidades.esAdmin(email, contra)) {
                     loginUser(email, contra)
-                }else{
+                } else {
                     loginUser(email, contra)
                 }
-
 
 
             } else {
@@ -62,7 +61,6 @@ class Login: AppCompatActivity() {
     }
 
 
-
     private fun loginUser(email: String, contra: String) {
         auth.signInWithEmailAndPassword(email, contra)
             .addOnCompleteListener(this) { task ->
@@ -70,33 +68,38 @@ class Login: AppCompatActivity() {
                     val currentUser: FirebaseUser? = auth.currentUser
                     val userId = currentUser?.uid
                     val rol = Utilidades.obtenerRol(email, contra, auth)
-                    if(userId != null){
+                    if (userId != null) {
 
-                        Utilidades.crearUsuario(userId,email, contra, rol)
+                        Utilidades.crearUsuario(userId, email, contra, rol)
                         Log.d("Login", "Usuario logueado como: $rol")
-                        startActivity(Intent(this, MainActivity::class.java))
-                        finish()
+                        if (rol == "administrador") {
+                            startActivity(Intent(this, HomeAdmin::class.java))
+                            finish()
+                        } else {
+                            startActivity(Intent(this, HomeCliente::class.java))
+                            finish()
+                        }
+
+
+                    } else {
+                        Log.e("Login", "Error al iniciar sesión: ${task.exception?.message}")
+                        Toast.makeText(this, "Error al iniciar sesión", Toast.LENGTH_SHORT).show()
                     }
-
-
-
-                } else {
-                    Log.e("Login", "Error al iniciar sesión: ${task.exception?.message}")
-                    Toast.makeText(this, "Error al iniciar sesión", Toast.LENGTH_SHORT).show()
                 }
+
+                val sharedPref = getSharedPreferences("login", MODE_PRIVATE)
+                val editor = sharedPref.edit()
+
+                if (Utilidades.esAdmin(email, contra)) {
+                    editor.putString("rol", "administrador")
+                } else {
+                    editor.putString("rol", "usuario")
+                }
+                editor.apply()
             }
 
-        val sharedPref = getSharedPreferences("login", MODE_PRIVATE)
-        val editor = sharedPref.edit()
 
-        if (Utilidades.esAdmin(email, contra)) {
-            editor.putString("rol", "administrador")
-        } else {
-            editor.putString("rol", "usuario")
-        }
-        editor.apply()
     }
-
 
 }
 
