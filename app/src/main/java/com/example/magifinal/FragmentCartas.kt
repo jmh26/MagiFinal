@@ -33,22 +33,13 @@ class FragmentCartas : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_cartas, container, false)
-
-        Toolbar = view.findViewById(R.id.toolbar)
-        setupToolbar()
-
-        return view
+        return inflater.inflate(R.layout.fragment_cartas, container, false)
 
 
 
     }
 
-    private fun setupToolbar(){
-        Toolbar.apply {
-            (requireActivity())
-        }
-    }
+
 
     companion object {
         /**

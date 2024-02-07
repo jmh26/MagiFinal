@@ -50,9 +50,7 @@ class FragmentHomeAdmin : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val btnEvents = view.findViewById<FloatingActionButton>(R.id.btnEventos)
-        val btnCards = view.findViewById<FloatingActionButton>(R.id.btnCartas)
-        val btnCasa = view.findViewById<FloatingActionButton>(R.id.btnHome)
+
 
 
 

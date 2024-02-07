@@ -12,10 +12,11 @@
     <item
         android:id="@+id/homeFragment"
         android:icon="@drawable/baseline_home_24"
-        tools:ignore="MenuTitle" />
+        tools:ignore = "MenuTitle"/>
     <item
         android:id="@+id/eventosFragment"
         android:icon="@drawable/baseline_calendar_month_24"
         tools:ignore="MenuTitle" />
+
 
 </menu>
