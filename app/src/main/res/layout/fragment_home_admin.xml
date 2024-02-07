@@ -1,69 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FragmentHomeAdmin">
+    android:paddingTop="?attr/actionBarSize">
 
-
-
-    <androidx.appcompat.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="#2D91FB"
-        android:id="@+id/toolbar"
-        android:layout_gravity="bottom"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_gravity="center">
-
-            <ImageButton
-                android:id="@+id/btnEventos"
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:src="@drawable/baseline_calendar_month_24"
-                android:contentDescription="Eventos">
-
-            </ImageButton>
-
-            <ImageButton
-                android:id="@+id/btnHome"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/baseline_home_24"
-                android:contentDescription="Eventos">
-
-            </ImageButton>
-
-            <ImageButton
-                android:id="@+id/btnCartas"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/baseline_crop_portrait_24"
-                android:contentDescription="Eventos">
-
-            </ImageButton>
+   <com.google.android.material.bottomnavigation.BottomNavigationView
+       android:id="@+id/navigation_bar"
+       android:layout_width="0dp"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="0dp"
+       android:layout_marginEnd="0dp"
+       android:background="?android:attr/windowBackground"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintLeft_toLeftOf="parent"
+       app:layout_constraintRight_toRightOf="parent"
+       app:menu="@menu/bottom_navigation_menu" />
 
 
 
 
-
-        </LinearLayout>
-
-
-
-    </androidx.appcompat.widget.Toolbar>
-
-
-
-
-
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

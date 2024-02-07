@@ -1,9 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph">
 
 
+    <fragment
+        android:id="@+id/fragmentHomeAdmin"
+        android:name="com.example.magifinal.FragmentHomeAdmin"
+        android:label="FragmentHomeAdmin"
+        tools:layout="@layout/fragment_home_admin">
+
+        <action
+            android:id="@+id/action_fragmentHomeAdmin_to_fragmentCartas"
+            app:destination="@id/fragmentCartas" />
+        <action
+            android:id="@+id/action_fragmentHomeAdmin_to_fragmentEventos"
+            app:destination="@id/fragmentEventos" />
+
+    </fragment>
+
+
+
+
+    <fragment
+        android:id="@+id/fragmentCartas"
+        android:name="com.example.magifinal.FragmentCartas"
+        android:label="FragmentCartas"
+        tools:layout="@layout/fragment_cartas">
+
+        <action
+            android:id="@+id/action_fragmentCartas_to_fragmentHomeAdmin"
+            app:destination="@id/fragmentHomeAdmin" />
+        <action
+            android:id="@+id/action_fragmentCartas_to_fragmentEventos"
+            app:destination="@id/fragmentEventos" />
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/fragmentEventos"
+        android:name="com.example.magifinal.FragmentEventos"
+        android:label="FragmentEventos"
+        tools:layout="@layout/fragment_eventos">
+
+        <action
+            android:id="@+id/action_fragmentEventos_to_fragmentHomeAdmin"
+            app:destination="@id/fragmentHomeAdmin" />
+        <action
+            android:id="@+id/action_fragmentEventos_to_fragmentCartas"
+            app:destination="@id/fragmentCartas" />
+
+
+    </fragment>
 
 
 </navigation>

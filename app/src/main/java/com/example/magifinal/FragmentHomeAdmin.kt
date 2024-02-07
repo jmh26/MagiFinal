@@ -5,8 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.navigation.NavigationView
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,8 +41,8 @@ class FragmentHomeAdmin : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home_admin, container, false)
+
 
 
 
@@ -50,13 +55,7 @@ class FragmentHomeAdmin : Fragment() {
         val btnCasa = view.findViewById<FloatingActionButton>(R.id.btnHome)
 
 
-        btnEvents.setOnClickListener {
-            val fragment = FragmentEventos()
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(androidx.fragment.R.id.fragment_container_view_tag, fragment)
-            transaction.addToBackStack(null)
-            transaction.commit()
-        }
+
     }
 
 
