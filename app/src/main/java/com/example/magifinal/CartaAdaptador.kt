@@ -7,6 +7,7 @@ import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 
 class CartaAdaptador (private val listaCartas: MutableList<Carta>): RecyclerView.Adapter<CartaAdaptador.CartaViewHolder>(),
 
@@ -21,6 +22,7 @@ class CartaAdaptador (private val listaCartas: MutableList<Carta>): RecyclerView
             val stock = itemView.findViewById<TextView>(R.id.item_stockCarta)
             val imagen = itemView.findViewById<ImageView>(R.id.item_imagenCarta)
     }
+
 
 
 
@@ -69,6 +71,14 @@ class CartaAdaptador (private val listaCartas: MutableList<Carta>): RecyclerView
         holder.categoria.text = carta.categoria
         holder.precio.text = carta.precio
         holder.stock.text = carta.stock
+
+        Glide.with(holder.itemView.context)
+            .load(carta.imagen)
+            .placeholder(R.drawable.ic_launcher_foreground)
+            .error(R.drawable.ic_launcher_background)
+            .into(holder.imagen)
+
+
     }
 
     override fun getItemCount(): Int = listaCartasFiltrada.size
