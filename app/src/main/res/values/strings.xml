@@ -1,9 +1,15 @@
 <resources>
-    <string name="app_name">MagiFinal</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_navigation">navigation</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+
+    <string name="seleccionar_categoria">Seleccionar Categoría</string>
+    <string name="app_name">mi app</string>
+    <string-array name="categorias">
+        <item>Blanco</item>
+        <item>Negro</item>
+        <item>Azul</item>
+        <item>Rojo</item>
+        <item>Verde</item>
+    </string-array>
+
+
+
 </resources>

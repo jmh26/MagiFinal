@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+
+
+
+    <ImageView
+        android:id="@+id/imagenCarta"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/baseline_image_search_24">
+
+    </ImageView>
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/nombreCarta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nombre de tu carta"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imagenCarta">
+
+    </com.google.android.material.textfield.TextInputEditText>
+
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/precioCarta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Precio de la carta"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="35dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/nombreCarta">
+
+
+    </com.google.android.material.textfield.TextInputEditText>
+
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/stockCarta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Stock de la carta"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/precioCarta"
+        app:layout_constraintTop_toBottomOf="@id/nombreCarta">
+
+    </com.google.android.material.textfield.TextInputEditText>
+
+
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/categoriaCarta"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stockCarta"
+        app:layout_constraintBottom_toTopOf="@id/botonAnadirCarta">
+
+
+    </Spinner>
+
+    <Button
+        android:id="@+id/botonAnadirCarta"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:text="Añadir carta"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/botonVolver"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/categoriaCarta">
+
+    </Button>
+
+
+    <Button
+        android:id="@+id/botonVolver"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="40dp"
+        android:text="Volver"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/botonAnadirCarta"
+        >
+
+    </Button>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

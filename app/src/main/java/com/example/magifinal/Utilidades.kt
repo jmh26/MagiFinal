@@ -1,6 +1,7 @@
 package com.example.magifinal
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 
@@ -25,6 +26,14 @@ class Utilidades {
                 "usuario"
             }
         }
+        fun crearCarta(dtb_ref: DatabaseReference, carta: Carta){
+            dtb_ref.child("Tienda").child("Cartas").child(carta.id!!).setValue(carta)
+        }
+
+        fun existecarta(cartas : List<Carta>, nombre: String): Boolean{
+            return cartas.any { it.nombre!!.lowercase() == nombre.lowercase() }
+        }
+
     }
 
 }
