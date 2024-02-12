@@ -1,33 +1,30 @@
 package com.example.magifinal
 
 import android.os.Bundle
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.magifinal.databinding.ActivityHomeAdminBinding
 
-class HomeAdmin: AppCompatActivity() {
-private lateinit var navController: NavController
+class HomeAdmin : AppCompatActivity() {
+
+    private lateinit var binding: ActivityHomeAdminBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home_admin)
+
+        binding = ActivityHomeAdminBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        val navView: BottomNavigationView = binding.navView
+
+        val navController = findNavController(R.id.nav_host_fragment_activity_fragment_home_admin)
 
 
 
-        navController = findNavController(R.id.fragment_container)
-
-        val bottomNavView = findViewById<BottomNavigationView>(R.id.navigation_bar)
-        bottomNavView.setupWithNavController(navController)
-
-        setupActionBarWithNavController(navController)
-        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, FragmentHomeAdmin()).commit()
-
-
-
-
-
-
+        navView.setupWithNavController(navController)
     }
 }

@@ -9,7 +9,10 @@
         <item>Rojo</item>
         <item>Verde</item>
     </string-array>
-
+    <string name="title_activity_fragment_home_admin">FragmentHomeAdmin</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 
 
 </resources>

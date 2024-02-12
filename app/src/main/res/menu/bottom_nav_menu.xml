@@ -9,21 +9,21 @@
         android:id="@+id/cartasFragment"
         android:icon="@drawable/baseline_crop_portrait_24"
         android:title="Cartas"
-        app:showAsAction="ifRoom" />
+        />
 
 
     <item
         android:id="@+id/homeFragment"
         android:icon="@drawable/baseline_home_24"
         android:title="Home"
-        app:showAsAction="ifRoom" />
+        />
 
     <item
         android:id="@+id/eventosFragment"
         android:icon="@drawable/baseline_calendar_month_24"
-        app:showAsAction="ifRoom"
+
         android:title="Eventos"
-         />
+        />
 
 
 </menu>
