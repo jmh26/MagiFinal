@@ -9,7 +9,7 @@
 
 
     <ImageView
-        android:id="@+id/imagenCarta"
+        android:id="@+id/imagenCartaEdit"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="50dp"
@@ -22,7 +22,7 @@
     </ImageView>
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/nombreCarta"
+        android:id="@+id/nombreCartaEdit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Nombre de tu carta"
@@ -31,13 +31,13 @@
         android:layout_marginEnd="60dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imagenCarta">
+        app:layout_constraintTop_toBottomOf="@id/imagenCartaEdit">
 
     </com.google.android.material.textfield.TextInputEditText>
 
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/precioCarta"
+        android:id="@+id/precioCartaEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Precio de la carta"
@@ -45,14 +45,14 @@
         android:layout_marginStart="60dp"
         android:layout_marginEnd="35dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/nombreCarta">
+        app:layout_constraintTop_toBottomOf="@id/nombreCartaEdit">
 
 
     </com.google.android.material.textfield.TextInputEditText>
 
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/stockCarta"
+        android:id="@+id/stockCartaEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Stock de la carta"
@@ -60,8 +60,8 @@
         android:layout_marginStart="60dp"
         android:layout_marginEnd="60dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/precioCarta"
-        app:layout_constraintTop_toBottomOf="@id/nombreCarta">
+        app:layout_constraintEnd_toStartOf="@id/precioCartaEdit"
+        app:layout_constraintTop_toBottomOf="@id/nombreCartaEdit">
 
     </com.google.android.material.textfield.TextInputEditText>
 
@@ -70,37 +70,37 @@
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/categoriaCarta"
+        android:id="@+id/categoriaCartaEdit"
         android:layout_marginTop="40dp"
         android:layout_marginStart="60dp"
         android:layout_marginEnd="60dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/stockCarta"
-        app:layout_constraintBottom_toTopOf="@id/botonAnadirCarta">
+        app:layout_constraintTop_toBottomOf="@id/stockCartaEdit"
+        app:layout_constraintBottom_toTopOf="@id/botonEditarCarta">
 
 
     </Spinner>
 
     <Button
-        android:id="@+id/botonAnadirCarta"
+        android:id="@+id/botonEditarCarta"
         style="@style/Widget.AppCompat.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
-        android:text="Añadir"
+        android:text="Editar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/botonVolver"
+        app:layout_constraintBottom_toTopOf="@id/botonVolverEdit"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/categoriaCarta">
+        app:layout_constraintTop_toBottomOf="@id/categoriaCartaEdit">
 
     </Button>
 
 
     <Button
-        android:id="@+id/botonVolver"
+        android:id="@+id/botonVolverEdit"
         style="@style/Widget.AppCompat.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -110,7 +110,7 @@
         android:text="Volver"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/botonAnadirCarta"
+        app:layout_constraintTop_toBottomOf="@id/botonEditarCarta"
         >
 
     </Button>
