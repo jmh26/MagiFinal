@@ -69,33 +69,26 @@ class Login: AppCompatActivity() {
                     val userId = currentUser?.uid
                     val rol = Utilidades.obtenerRol(email, contra, auth)
                     if (userId != null) {
-
                         Utilidades.crearUsuario(userId, email, contra, rol)
                         Log.d("Login", "Usuario logueado como: $rol")
-                        if (rol == "administrador") {
+                        val esAdmin = rol == "administrador"
+                        val sharedPref = getSharedPreferences("login", MODE_PRIVATE)
+                        val editor = sharedPref.edit()
+                        editor.putBoolean("esAdmin", esAdmin)
+                        editor.apply()
+                        if (esAdmin) {
                             startActivity(Intent(this, HomeAdmin::class.java))
-                            finish()
                         } else {
                             startActivity(Intent(this, HomeCliente::class.java))
-                            finish()
                         }
-
-
+                        finish()
                     } else {
                         Log.e("Login", "Error al iniciar sesión: ${task.exception?.message}")
                         Toast.makeText(this, "Error al iniciar sesión", Toast.LENGTH_SHORT).show()
                     }
                 }
 
-                val sharedPref = getSharedPreferences("login", MODE_PRIVATE)
-                val editor = sharedPref.edit()
 
-                if (Utilidades.esAdmin(email, contra)) {
-                    editor.putString("rol", "administrador")
-                } else {
-                    editor.putString("rol", "usuario")
-                }
-                editor.apply()
             }
 
 

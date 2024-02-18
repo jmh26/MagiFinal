@@ -45,7 +45,10 @@ class AnadirCarta : AppCompatActivity(), CoroutineScope {
 
     private lateinit var job: Job
 
-    private var url_carta: Uri? = null
+    private var categoriaSeleccionada: String = ""
+
+
+        private var url_carta: Uri? = null
 
     private lateinit var db_ref: DatabaseReference
     private lateinit var sto_ref: StorageReference
@@ -67,6 +70,7 @@ class AnadirCarta : AppCompatActivity(), CoroutineScope {
         stock = findViewById(R.id.stockCarta)
         imagen = findViewById(R.id.imagenCarta)
         crear = findViewById(R.id.botonAnadirCarta)
+        volver = findViewById(R.id.botonVolver)
 
 
         db_ref = FirebaseDatabase.getInstance().reference
@@ -91,7 +95,7 @@ class AnadirCarta : AppCompatActivity(), CoroutineScope {
                 position: Int,
                 id: Long
             ) {
-                val categoria = parent?.getItemAtPosition(position).toString()
+                categoriaSeleccionada = parent?.getItemAtPosition(position).toString()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -127,7 +131,7 @@ class AnadirCarta : AppCompatActivity(), CoroutineScope {
                         Carta(
                             id_generada,
                             nombre.text.toString().trim(),
-                            categoria.toString().trim(),
+                            categoriaSeleccionada,
                             precio.text.toString().trim(),
                             stock.text.toString().trim(),
                             url_foto

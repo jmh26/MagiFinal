@@ -2,14 +2,15 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageView
-            android:layout_width="40dp"
+            android:id="@+id/item_editarCarta"
+            android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/baseline_edit_24"
             app:layout_constraintStart_toStartOf="parent"
@@ -19,28 +20,41 @@
         </ImageView>
 
         <ImageView
-            android:layout_width="40dp"
+            android:id="@+id/item_eliminarCarta"
+            android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/baseline_delete_24"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/item_editarCarta"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_margin="30dp">
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="25dp"
+            android:clickable="true">
 
         </ImageView>
 
 
         <ImageView
+            android:id="@+id/item_pedirCarta"
+            android:layout_width="60dp"
+            android:layout_height="70dp"
+            android:src="@drawable/baseline_add_shopping_cart_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="30dp"
+            >
+
+        </ImageView>
+        <ImageView
             android:id="@+id/item_imagenCarta"
             android:layout_width="150dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/common_full_open_on_phone"
+            android:layout_height="150dp"
+            android:src="@drawable/baseline_image_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginVertical="20dp"
             android:layout_marginHorizontal="20dp"
-            android:adjustViewBounds="true"
             />
 
 

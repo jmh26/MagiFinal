@@ -11,6 +11,7 @@ import com.example.magifinal.Evento
 import com.example.magifinal.databinding.FragmentEventosBinding
 import com.example.magifinal.databinding.FragmentHomeBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 class EventosFragment : Fragment() {
@@ -18,7 +19,7 @@ class EventosFragment : Fragment() {
 
     private var _binding: FragmentEventosBinding? = null
 
-    private lateinit var db_ref: FirebaseDatabase
+    private lateinit var db_ref: DatabaseReference
     private lateinit var lista: MutableList<Evento>
 
 

@@ -1,5 +1,7 @@
 package com.example.magifinal.ui.Cartas
 
+import android.content.Context.MODE_PRIVATE
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,10 +12,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.magifinal.AnadirCarta
 import com.example.magifinal.Carta
 import com.example.magifinal.CartaAdaptador
 import com.example.magifinal.Evento
 import com.example.magifinal.databinding.FragmentCartasBinding
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -28,6 +32,8 @@ class CartasFragment : Fragment() {
     private lateinit var adaptador: CartaAdaptador
     private lateinit var recyclerView: RecyclerView
     private var contextoapp  = this.context
+    private lateinit var fabAddCarta: FloatingActionButton
+
 
 
 
@@ -39,6 +45,9 @@ class CartasFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
+
+
+
         var db_ref = FirebaseDatabase.getInstance().reference
 
         var user = FirebaseAuth.getInstance().currentUser
@@ -46,6 +55,13 @@ class CartasFragment : Fragment() {
         lista = mutableListOf()
         _binding = FragmentCartasBinding.inflate(inflater, container, false)
 
+
+        fabAddCarta = binding.fabAddcarta
+
+        fabAddCarta.setOnClickListener {
+            val intent = Intent(activity, AnadirCarta::class.java)
+            startActivity(intent)
+        }
         db_ref.child("Tienda").child("Cartas").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 lista.clear()
@@ -70,6 +86,8 @@ class CartasFragment : Fragment() {
 
         recyclerView.layoutManager = LinearLayoutManager(contextoapp)
 
+
+        return binding.root
 
 
     }
