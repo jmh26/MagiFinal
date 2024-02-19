@@ -47,7 +47,6 @@ class PedidosFragment : Fragment() {
             val esAdmin = sharedPreferences.getBoolean("esAdmin", false)
 
             if (esAdmin) {
-                // Si el usuario es un administrador, obtén solo los pedidos que no están preparados
                 db_ref.child("Tienda").child("reservas_carta").orderByChild("estado")
                     .equalTo("en preparación")
                     .addValueEventListener(object : ValueEventListener {

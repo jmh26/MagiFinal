@@ -87,14 +87,13 @@ class PedidoAdaptador(private val listaPedidos: MutableList<Pedido>): RecyclerVi
 
             holder.confirmar.setOnClickListener {
                 val db_ref = FirebaseDatabase.getInstance().reference
-                val pedidoID = pedidoActual.id ?: "" // Obtener el ID del pedido actual
+                val pedidoID = pedidoActual.id ?: ""
                 val nuevoEstado = "Preparado"
 
                 db_ref.child("Tienda").child("reservas_carta").child(pedidoID).child("estado")
                     .setValue(nuevoEstado)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            // Eliminar el pedido de la lista local después de actualizar el estado en la base de datos
                             listaPedidos.remove(pedidoActual)
                             notifyDataSetChanged()
                             Toast.makeText(contexto, "Pedido preparado", Toast.LENGTH_SHORT).show()

@@ -73,31 +73,29 @@ class Registro: AppCompatActivity() {
                     if (userId != null) {
                         val rol = if (Utilidades.esAdmin(email, contra)) {
                             "administrador"
-
                         } else {
                             "usuario"
                         }
                         Utilidades.crearUsuario(userId, email, contra, rol)
 
-                        if (rol == "usuario") {
-                            startActivity(Intent(this, HomeCliente::class.java))
+                        val esAdmin = rol == "administrador"
+                        val sharedPref = getSharedPreferences("login", MODE_PRIVATE)
+                        val editor = sharedPref.edit()
+                        editor.putBoolean("esAdmin", esAdmin)
+                        editor.apply()
 
+                        if (esAdmin) {
+                            startActivity(Intent(this, HomeAdmin::class.java))
                         } else {
                             startActivity(Intent(this, HomeAdmin::class.java))
                         }
 
-
-
-
                         Toast.makeText(this, "Usuario registrado correctamente", Toast.LENGTH_SHORT)
                             .show()
-
                     } else {
                         Toast.makeText(this, "Error al crear el usuario", Toast.LENGTH_SHORT).show()
                     }
                 }
-
-
             }
     }
 }

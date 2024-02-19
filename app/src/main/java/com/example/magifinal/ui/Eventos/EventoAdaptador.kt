@@ -1,5 +1,6 @@
 package com.example.magifinal.ui.Eventos
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -13,8 +14,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.magifinal.R
 import com.example.magifinal.Utilidades
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
+import java.util.UUID
 
 class EventoAdaptador(private var listaEventos: MutableList<Evento>, private var suscripcion:MutableList<Suscripcion>?=null) : RecyclerView.Adapter<EventoAdaptador.EventoViewHolder>(),
     Filterable {
@@ -43,14 +49,14 @@ class EventoAdaptador(private var listaEventos: MutableList<Evento>, private var
             return EventoAdaptador.EventoViewHolder(itemView)
         }
 
-    override fun onBindViewHolder(holder: EventoViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: EventoViewHolder, @SuppressLint("RecyclerView") position: Int) {
         val eventoActual = listaEventos[position]
         holder.nombre.text = eventoActual.nombre
         holder.fecha.text = eventoActual.fecha
         holder.precio.text = eventoActual.precio + "€"
         holder.aforoMax.text = eventoActual.aforo_max.toString()
         holder.estado.text = eventoActual.estado
-        holder.aforoActual.text = eventoActual.aforo_actual.toString()
+        holder.aforoActual.text = eventoActual.aforo_actual.toString() + " / "
 
         val url: String? = when (eventoActual.imagen) {
             "" -> null
@@ -66,6 +72,7 @@ class EventoAdaptador(private var listaEventos: MutableList<Evento>, private var
         if (esAdmin) {
             holder.suscribir.visibility = View.GONE
             holder.eliminar.visibility = View.VISIBLE
+            holder.estado.visibility = View.GONE
 
             holder.eliminar.setOnClickListener {
                 try {
@@ -74,7 +81,7 @@ class EventoAdaptador(private var listaEventos: MutableList<Evento>, private var
                     listaEventos.remove(eventoActual)
 
                     st_ref.child("Eventos").child("Fotos").child(eventoActual.id!!).delete()
-                    db_ref.child("Tienda").child("reservas_eventos").child(eventoActual.id!!).removeValue()
+                    db_ref.child("Tienda").child("Eventos").child(eventoActual.id!!).removeValue()
 
 
                     Toast.makeText(contexto, "Evento eliminado", Toast.LENGTH_SHORT).show()
@@ -89,20 +96,54 @@ class EventoAdaptador(private var listaEventos: MutableList<Evento>, private var
 
             holder.suscribir.setOnClickListener {
                 val db_ref = FirebaseDatabase.getInstance().reference
-                val sharedPreferences = contexto.getSharedPreferences("login", Context.MODE_PRIVATE)
-                val androidId = sharedPreferences.getString("androidId", null)
-                val eventoID = eventoActual.id ?: "" // Obtener el ID del evento actual
-                val suscripcion = Suscripcion(eventoID, androidId)
-                db_ref.child("Tienda").child("reservas_eventos").child(eventoID).child(androidId!!).setValue(suscripcion)
-                Toast.makeText(contexto, "Te has suscrito al evento", Toast.LENGTH_SHORT).show()
+                val eventoActual = listaEventos[position]
+
+                val usuarioActual = FirebaseAuth.getInstance().currentUser
+
+                if (usuarioActual != null && eventoActual.id != null && eventoActual.estado != null && eventoActual.aforo_actual != null) {
+                    val idUsuario = usuarioActual.uid
+                    val eventoID = eventoActual.id
+
+                    db_ref.child("Tienda").child("reservas_eventos").child(eventoID!!).child(idUsuario)
+                        .addListenerForSingleValueEvent(object : ValueEventListener {
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                if (snapshot.exists()) {
+                                    Toast.makeText(contexto, "Ya estás suscrito a este evento", Toast.LENGTH_SHORT).show()
+                                } else {
+                                    val suscripcion = Suscripcion(eventoID, idUsuario)
+                                    db_ref.child("Tienda").child("reservas_eventos").child(eventoID).child(idUsuario).setValue(suscripcion)
+
+                                    eventoActual.estado = "apuntado"
+                                    val nuevoAforoActual = (eventoActual.aforo_actual!!.toInt() + 1).toString()
+                                    eventoActual.aforo_actual = nuevoAforoActual
+                                    db_ref.child("Tienda").child("reservas_eventos").child(eventoID).child("estado").setValue("apuntado")
+                                    db_ref.child("Tienda").child("reservas_eventos").child(eventoID).child("aforo_actual").setValue(nuevoAforoActual)
+
+                                    val currentPosition = holder.adapterPosition
+                                    val eventoActual = listaEventos[currentPosition]
+
+                                    notifyItemChanged(position)
+
+                                    Toast.makeText(contexto, "Te has suscrito al evento", Toast.LENGTH_SHORT).show()
+
+                                    holder.estado.text = "apuntado"
+
+                                }
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                Toast.makeText(contexto, "Error al comprobar la suscripción", Toast.LENGTH_SHORT).show()
+                            }
+                        })
+                } else {
+                    Toast.makeText(contexto, "Error al obtener el ID de usuario o ID de evento", Toast.LENGTH_SHORT).show()
+                }
             }
-
-
-
+            }
         }
 
 
-    }
+
 
     override fun getItemCount(): Int = listaEventos.size
 

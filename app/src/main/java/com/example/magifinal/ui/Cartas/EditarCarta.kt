@@ -100,7 +100,6 @@ class EditarCarta: AppCompatActivity(),
                 position: Int,
                 id: Long
             ) {
-                val categoria = parent?.getItemAtPosition(position).toString()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -115,7 +114,6 @@ class EditarCarta: AppCompatActivity(),
                 categoria.selectedItem.toString().trim().isEmpty() ||
                 (url_carta == null && pojo_carta.imagen == null)
             ) {
-                // Mensaje de error y registro de depuración
                 Toast.makeText(
                     applicationContext,
                     "Por favor, rellene todos los campos",

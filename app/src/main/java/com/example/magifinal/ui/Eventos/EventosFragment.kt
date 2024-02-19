@@ -35,8 +35,6 @@ class EventosFragment : Fragment() {
     private lateinit var listaEventos: MutableList<Evento>
     private lateinit var fabAddEvento: FloatingActionButton
     private lateinit var adaptador: EventoAdaptador
-    private lateinit var db_ref: DatabaseReference
-    private lateinit var lista: MutableList<Evento>
 
 
     private val binding get() = _binding!!
