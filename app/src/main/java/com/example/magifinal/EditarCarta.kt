@@ -104,55 +104,60 @@ class EditarCarta: AppCompatActivity(),
         editar.setOnClickListener {
             if (nombre.text.toString().trim().isEmpty() ||
                 precio.text.toString().trim().isEmpty() ||
-                stock.text.toString().trim().isEmpty()  ||
+                stock.text.toString().trim().isEmpty() ||
                 categoria.selectedItem.toString().trim().isEmpty() ||
-                url_carta.toString().trim().isEmpty()
+                (url_carta == null && pojo_carta.imagen == null)
             ) {
+                // Mensaje de error y registro de depuración
                 Toast.makeText(
                     applicationContext,
                     "Por favor, rellene todos los campos",
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                var url_imagen_firebase = String()
                 launch {
+                    var url_imagen_firebase = String()
                     if (url_carta == null) {
                         url_imagen_firebase = pojo_carta.imagen!!
                     } else {
-                        url_imagen_firebase = Utilidades.guardarCarta(
+                        val url_foto = Utilidades.guardarImagenCarta(
                             sto_ref,
                             pojo_carta.id!!,
                             url_carta!!
-
-
                         )
+                        url_imagen_firebase = url_foto.toString()
                     }
-                    var carta = Carta(
+
+                    val carta = Carta(
+                        pojo_carta.id,
                         nombre.text.toString(),
                         categoria.selectedItem.toString(),
                         precio.text.toString(),
                         stock.text.toString(),
                         url_imagen_firebase
                     )
-                    Utilidades.crearCarta(db_ref, pojo_carta)
 
-                    Utilidades.toastCorrutina(
-                        thisActivity,
-                        applicationContext,
-                        "Carta modificada con exito"
-                    )
-
-                    val activity = Intent(applicationContext, HomeAdmin::class.java)
-                    startActivity(activity)
+                    db_ref.child("Tienda").child("Cartas").child(pojo_carta.id!!).setValue(carta)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                Utilidades.toastCorrutina(
+                                    this@EditarCarta,
+                                    applicationContext,
+                                    "Carta modificada con éxito"
+                                )
+                                val activity = Intent(applicationContext, HomeAdmin::class.java)
+                                startActivity(activity)
+                            } else {
+                                Toast.makeText(
+                                    applicationContext,
+                                    "Error al modificar la carta",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
                 }
-
-                imagen.setOnClickListener() {
-                    accesoGaleria.launch("image/*")
-                }
-
             }
-
-            }
+        }
         volver.setOnClickListener {
             val activity = Intent(applicationContext, HomeAdmin::class.java)
             startActivity(activity)

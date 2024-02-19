@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+
+
+        <item name="android:actionOverflowButtonStyle">@style/MyOverflowButtonStyle</item>
+    </style>
+
+    <style name="MyOverflowButtonStyle" parent="@style/Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:src"> @drawable/baseline_settings_24</item>
+    </style>
+
+    <style name="LightTheme" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">#504AAA</item>
+        <item name="colorPrimaryDark">#3E2C95</item>
+        <item name="colorAccent">#4B5DB3</item>
+
+    </style>
+
+
+    <style name="DarkTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryDark">#6E5051</item>
+        <item name="colorAccent">#8E5A5A</item>
+    </style>
+
+    <style name="LightThemeNoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">#504AAA</item>
+        <item name="colorPrimaryDark">#3E2C95</item>
+        <item name="colorAccent">#4B5DB3</item>
+
+    </style>
+
+
+    <style name="DarkThemeNoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryDark">#6E5051</item>
+        <item name="colorAccent">#8E5A5A</item>
+    </style>
+</resources>

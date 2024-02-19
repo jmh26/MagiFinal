@@ -1,6 +1,8 @@
 package com.example.magifinal
 
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
+import android.content.Intent
 import android.preference.PreferenceManager
 import android.provider.Settings
 import android.util.Log
@@ -13,6 +15,8 @@ import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
@@ -81,9 +85,10 @@ class CartaAdaptador (private val listaCartas: MutableList<Carta>): RecyclerView
     override fun onBindViewHolder(holder: CartaAdaptador.CartaViewHolder, position: Int) {
         val cartaAct = listaCartasFiltrada[position]
         holder.nombre.text = cartaAct.nombre
-        holder.categoria.text = cartaAct.categoria
-        holder.precio.text = cartaAct.precio
-        holder.stock.text = cartaAct.stock
+        holder.categoria.text = "Categoria: "+ cartaAct.categoria
+        holder.precio.text ="Precio: " +  cartaAct.precio
+        holder.stock.text = "Stock: " + cartaAct.stock
+
 
         val url: String? = when (cartaAct.imagen) {
             null -> ""
@@ -96,47 +101,76 @@ class CartaAdaptador (private val listaCartas: MutableList<Carta>): RecyclerView
             .transition(Utilidades.transicion).into(holder.imagen)
 
 
-        var sharedPreferences = PreferenceManager.getDefaultSharedPreferences(contexto)
-
-        var tipoCuenta = sharedPreferences.getString("tipoCuenta", "cliente")
-
-        if (tipoCuenta == "cliente") {
-            holder.pedir.visibility = View.VISIBLE
-            holder.pedir.setOnClickListener {
-                val db_ref = FirebaseDatabase.getInstance().reference
-                val user = FirebaseAuth.getInstance().currentUser
-                val id = db_ref.push().key
-                cartaAct.stock = (cartaAct.stock?.toInt()?.minus(1)).toString()
-                val androID =
-                    Settings.Secure.getString(contexto.contentResolver, Settings.Secure.ANDROID_ID)
-                db_ref.child("Tienda").child("reservas_carta").child(androID).child(id!!)
-                    .setValue(cartaAct)
 
 
+        val stockInt = cartaAct.stock?.toIntOrNull() ?: 0
+
+
+        if (stockInt > 15) {
+            holder.stock.setTextColor(ContextCompat.getColor(contexto, R.color.verde))
+        } else if (stockInt in 1..15) {
+            holder.stock.setTextColor(ContextCompat.getColor(contexto, R.color.amarillo))
+        } else {
+            holder.stock.setTextColor(ContextCompat.getColor(contexto, R.color.rojo))
+        }
+
+
+        var sharedPreferences = contexto.getSharedPreferences("login", MODE_PRIVATE)
+        var esAdmin = sharedPreferences.getBoolean("esAdmin", false)
+
+
+
+
+        Log.d("Adaptador", "Valor de tipoCuenta: $esAdmin")
+        if (esAdmin) {
+            holder.editar.visibility = View.VISIBLE
+            holder.pedir.visibility = View.GONE
+            holder.eliminar.visibility = View.VISIBLE
+            holder.eliminar.setOnClickListener {
+                try {
+                    val db_ref = FirebaseDatabase.getInstance().reference
+                    val st_ref = FirebaseStorage.getInstance().reference
+                    listaCartasFiltrada.remove(cartaAct)
+                    val androID =
+                        Settings.Secure.getString(
+                            contexto.contentResolver,
+                            Settings.Secure.ANDROID_ID
+                        )
+
+
+                    st_ref.child("Cartas").child("Fotos").child(cartaAct.id!!).delete()
+                    db_ref.child("Tienda").child("Cartas").child(cartaAct.id!!).removeValue()
+                    Toast.makeText(contexto, "Carta eliminada", Toast.LENGTH_SHORT).show()
+                } catch (e: Exception) {
+                    Toast.makeText(contexto, "Error al eliminar carta", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            holder.editar.setOnClickListener {
+                val intent = Intent(contexto, EditarCarta::class.java)
+                intent.putExtra("carta", cartaAct)
+                contexto.startActivity(intent)
             }
 
 
         } else {
-            holder.pedir.visibility = View.GONE
-
-            holder.eliminar.setOnClickListener {
-
-                try {
-
-                    val db_ref = FirebaseDatabase.getInstance().reference
-                    val st_ref = FirebaseStorage.getInstance().reference
-                    listaCartasFiltrada.remove(cartaAct)
-
-                    val androID =
-                        Settings.Secure.getString(contexto.contentResolver, Settings.Secure.ANDROID_ID)
-
-                    st_ref.child("Cartas").child("Fotos").child(cartaAct.id!!).delete()
-                    db_ref.child("Tienda").child("Cartas").child(cartaAct.id!!).removeValue()
-
-                    Toast.makeText(contexto, "Carta eliminada", Toast.LENGTH_SHORT).show()
-                } catch (e: Exception) {
-
-                Toast.makeText(contexto, "Error al eliminar carta", Toast.LENGTH_SHORT).show()
+            holder.editar.visibility = View.GONE
+            holder.eliminar.visibility = View.GONE
+            holder.pedir.setOnClickListener {
+                val db_ref = FirebaseDatabase.getInstance().reference
+                val user = FirebaseAuth.getInstance().currentUser
+                val id = db_ref.push().key
+                val stock = cartaAct.stock?.toIntOrNull()
+                if (stock != null && stock > 0) {
+                    val newStock = (stock - 1).toString()
+                    cartaAct.stock = newStock
+                    db_ref.child("Tienda").child("reservas_carta").child(id!!)
+                        .setValue(cartaAct)
+                    db_ref.child("Tienda").child("Cartas").child(cartaAct.id!!).child("stock")
+                        .setValue(newStock)
+                } else {
+                    Toast.makeText(contexto, "No hay stock", Toast.LENGTH_SHORT).show()
+                    holder.pedir.visibility = View.GONE
                 }
 
             }

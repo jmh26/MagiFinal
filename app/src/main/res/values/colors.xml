@@ -4,4 +4,12 @@
     <color name="white">#FFFFFFFF</color>
     <color name="BtnSinPresionar">#2D91FB</color>
     <color name="BtnPresionado"></color>
+
+    <color name="verde">#19ED19</color>
+    <color name="amarillo">#E4E415</color>
+    <color name="rojo">#FF0000</color>
+
+    <color name="darkColorPrimary">#FFBB86FC</color>
+    <color name="darkColorPrimaryDark">#FF3700B3</color>
+    <color name="darkColorAccent">#FF03DAC5</color>
 </resources>

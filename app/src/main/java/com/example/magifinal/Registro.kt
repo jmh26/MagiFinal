@@ -1,6 +1,7 @@
 package com.example.magifinal
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -26,6 +27,12 @@ class Registro: AppCompatActivity() {
     private lateinit var yaTengoCuenta: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val sharedPreferences = getSharedPreferences("ThemePref", Context.MODE_PRIVATE)
+        if (sharedPreferences.getBoolean("DarkTheme", false)) {
+            setTheme(R.style.DarkThemeNoActionBar)
+        } else {
+            setTheme(R.style.LightThemeNoActionBar)
+        }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registro)
         auth = FirebaseAuth.getInstance()

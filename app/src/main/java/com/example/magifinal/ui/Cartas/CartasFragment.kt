@@ -1,9 +1,13 @@
 package com.example.magifinal.ui.Cartas
 
+import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -12,10 +16,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.magifinal.Ajustes
 import com.example.magifinal.AnadirCarta
+import com.example.magifinal.Autor
 import com.example.magifinal.Carta
 import com.example.magifinal.CartaAdaptador
 import com.example.magifinal.Evento
+import com.example.magifinal.R
 import com.example.magifinal.databinding.FragmentCartasBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
@@ -39,11 +46,59 @@ class CartasFragment : Fragment() {
 
     private val binding get() = _binding!!
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_fragment, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_autor -> {
+
+                val intent = Intent(activity, Autor::class.java)
+                startActivity(intent)
+                true
+            }
+            R.id.action_ajustes -> {
+                val intent = Intent(activity, Ajustes::class.java)
+                startActivity(intent)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        _binding = FragmentCartasBinding.inflate(inflater, container, false)
+        lista = mutableListOf()
+
+        fabAddCarta = binding.fabAddcarta
+
+        var sharedPreferences = requireActivity().getSharedPreferences("login", MODE_PRIVATE)
+        var esAdmin = sharedPreferences.getBoolean("esAdmin", false)
+
+        if (esAdmin) {
+            fabAddCarta.visibility = View.VISIBLE
+            fabAddCarta = binding.fabAddcarta
+
+            fabAddCarta.setOnClickListener {
+                val intent = Intent(activity, AnadirCarta::class.java)
+                startActivity(intent)
+            }
+        } else {
+            fabAddCarta.visibility = View.GONE
+        }
 
 
 
@@ -52,16 +107,10 @@ class CartasFragment : Fragment() {
 
         var user = FirebaseAuth.getInstance().currentUser
 
-        lista = mutableListOf()
-        _binding = FragmentCartasBinding.inflate(inflater, container, false)
 
 
-        fabAddCarta = binding.fabAddcarta
 
-        fabAddCarta.setOnClickListener {
-            val intent = Intent(activity, AnadirCarta::class.java)
-            startActivity(intent)
-        }
+
         db_ref.child("Tienda").child("Cartas").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 lista.clear()

@@ -1,5 +1,6 @@
 package com.example.magifinal
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -23,6 +24,12 @@ class Login: AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val sharedPreferences = getSharedPreferences("ThemePref", Context.MODE_PRIVATE)
+        if (sharedPreferences.getBoolean("DarkTheme", false)) {
+            setTheme(R.style.DarkThemeNoActionBar)
+        } else {
+            setTheme(R.style.LightThemeNoActionBar)
+        }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         auth = FirebaseAuth.getInstance()
@@ -79,7 +86,7 @@ class Login: AppCompatActivity() {
                         if (esAdmin) {
                             startActivity(Intent(this, HomeAdmin::class.java))
                         } else {
-                            startActivity(Intent(this, HomeCliente::class.java))
+                            startActivity(Intent(this, HomeAdmin::class.java))
                         }
                         finish()
                     } else {

@@ -125,7 +125,7 @@ class AnadirCarta : AppCompatActivity(), CoroutineScope {
 
 
                 launch {
-                    val url_foto = Utilidades.guardarCarta(sto_ref, id_generada!!, url_carta!!)
+                    val url_foto = Utilidades.guardarImagenCarta(sto_ref, id_generada!!, url_carta!!)
 
                     var carta =
                         Carta(
