@@ -99,7 +99,6 @@ class CartasFragment : Fragment() {
 
         var db_ref = FirebaseDatabase.getInstance().reference
 
-        var user = FirebaseAuth.getInstance().currentUser
 
 
 

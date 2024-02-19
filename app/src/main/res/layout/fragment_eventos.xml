@@ -7,10 +7,11 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_pedidos"
+        android:id="@+id/recycler_view_eventos"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:padding="4dp"
+        android:layout_margin="10dp"
         android:scrollbars="vertical"
         android:layout_marginBottom="10dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,7 +24,29 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fab_addevento"
+        android:src="@drawable/baseline_add_24"
+        app:layout_constraintBottom_toTopOf="@id/nav_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="30dp"
+        android:layout_marginEnd="30dp">
 
+    </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="?android:attr/windowBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/bottom_nav_menu" />
 
 
 

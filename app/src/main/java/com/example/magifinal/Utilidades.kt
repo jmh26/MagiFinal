@@ -8,6 +8,7 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.example.magifinal.ui.Cartas.Carta
+import com.example.magifinal.ui.Eventos.Evento
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -40,16 +41,18 @@ class Utilidades {
             dtb_ref.child("Tienda").child("Cartas").child(carta.id!!).setValue(carta)
         }
 
-        suspend fun guardarCarta(sto_ref: StorageReference, id:String, imagen: Uri):String{
-            lateinit var url_carta_firebase: Uri
-            sto_ref.child("Cartas").child(id).putFile(imagen).await()
-            url_carta_firebase = sto_ref.child("Cartas").child("Fotos").child(id).putFile(imagen).await().storage.downloadUrl.await()
-
-            return url_carta_firebase.toString()
+        fun crearEvento(dtb_ref: DatabaseReference, evento: Evento){
+            dtb_ref.child("Tienda").child("Eventos").child(evento.id!!).setValue(evento)
         }
+
+
 
         fun existecarta(cartas : List<Carta>, nombre: String): Boolean{
             return cartas.any { it.nombre!!.lowercase() == nombre.lowercase() }
+        }
+
+        fun existeevento(eventos : List<Evento>, nombre: String): Boolean{
+            return eventos.any { it.nombre!!.lowercase() == nombre.lowercase() }
         }
 
         fun toastCorrutina(activity: AppCompatActivity, contexto: Context, texto: String){
@@ -80,6 +83,12 @@ class Utilidades {
             lateinit var url_carta_firebase: Uri
             url_carta_firebase = sto_ref.child("Cartas").child("Fotos").child(id).putFile(imagen).await().storage.downloadUrl.await()
             return url_carta_firebase.toString()
+        }
+
+        suspend fun guardarImagenEvento(sto_ref: StorageReference, id: String, imagen: Uri): String {
+            lateinit var url_evento_firebase: Uri
+            url_evento_firebase = sto_ref.child("Eventos").child("Fotos").child(id).putFile(imagen).await().storage.downloadUrl.await()
+            return url_evento_firebase.toString()
         }
 
 

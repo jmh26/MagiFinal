@@ -18,6 +18,8 @@
             android:name=".HomeAdmin"
             android:exported="false"
           />
+        <activity android:name=".ui.Eventos.AnadirEvento"
+            android:exported="false" />
         <activity android:name=".Ajustes"
             android:exported="false" />
         <activity android:name=".Autor"
