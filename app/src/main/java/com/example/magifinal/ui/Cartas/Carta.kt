@@ -1,4 +1,4 @@
-package com.example.magifinal
+package com.example.magifinal.ui.Cartas
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

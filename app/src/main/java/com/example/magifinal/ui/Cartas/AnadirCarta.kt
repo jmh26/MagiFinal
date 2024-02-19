@@ -1,10 +1,8 @@
-package com.example.magifinal
+package com.example.magifinal.ui.Cartas
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -15,20 +13,17 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.request.RequestOptions
+import com.example.magifinal.HomeAdmin
+import com.example.magifinal.R
+import com.example.magifinal.Utilidades
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import java.lang.reflect.Array.get
 import kotlin.coroutines.CoroutineContext
 
 class AnadirCarta : AppCompatActivity(), CoroutineScope {
@@ -125,7 +120,8 @@ class AnadirCarta : AppCompatActivity(), CoroutineScope {
 
 
                 launch {
-                    val url_foto = Utilidades.guardarImagenCarta(sto_ref, id_generada!!, url_carta!!)
+                    val url_foto =
+                        Utilidades.guardarImagenCarta(sto_ref, id_generada!!, url_carta!!)
 
                     var carta =
                         Carta(

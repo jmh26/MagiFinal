@@ -1,6 +1,5 @@
 package com.example.magifinal.ui.Cartas
 
-import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.os.Bundle
@@ -10,18 +9,13 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.magifinal.Ajustes
-import com.example.magifinal.AnadirCarta
 import com.example.magifinal.Autor
-import com.example.magifinal.Carta
-import com.example.magifinal.CartaAdaptador
-import com.example.magifinal.Evento
 import com.example.magifinal.R
 import com.example.magifinal.databinding.FragmentCartasBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -38,10 +32,8 @@ class CartasFragment : Fragment() {
     private lateinit var lista: MutableList<Carta>
     private lateinit var adaptador: CartaAdaptador
     private lateinit var recyclerView: RecyclerView
-    private var contextoapp  = this.context
+    private var contextoapp = this.context
     private lateinit var fabAddCarta: FloatingActionButton
-
-
 
 
     private val binding get() = _binding!!
@@ -66,14 +58,17 @@ class CartasFragment : Fragment() {
                 startActivity(intent)
                 true
             }
+
             R.id.action_ajustes -> {
                 val intent = Intent(activity, Ajustes::class.java)
                 startActivity(intent)
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -82,6 +77,7 @@ class CartasFragment : Fragment() {
 
         _binding = FragmentCartasBinding.inflate(inflater, container, false)
         lista = mutableListOf()
+
 
         fabAddCarta = binding.fabAddcarta
 
@@ -99,8 +95,6 @@ class CartasFragment : Fragment() {
         } else {
             fabAddCarta.visibility = View.GONE
         }
-
-
 
 
         var db_ref = FirebaseDatabase.getInstance().reference
@@ -122,9 +116,9 @@ class CartasFragment : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(contextoapp, "Error en la lectura de datos", Toast.LENGTH_LONG).show()
+                Toast.makeText(contextoapp, "Error en la lectura de datos", Toast.LENGTH_LONG)
+                    .show()
             }
-
 
 
         })
@@ -144,5 +138,14 @@ class CartasFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val fabCarrito: FloatingActionButton = view.findViewById(R.id.fab_carrito)
+        fabCarrito.setOnClickListener {
+            findNavController().navigate(R.id.action_cartasFragment_to_pedidosFragment)
+        }
     }
 }

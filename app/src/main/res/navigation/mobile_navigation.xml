@@ -17,9 +17,24 @@
         android:label="Home"
         tools:layout="@layout/fragment_home" />
 
+
+
     <fragment
         android:id="@+id/cartasFragment"
         android:name="com.example.magifinal.ui.Cartas.CartasFragment"
         android:label="Cartas"
-        tools:layout="@layout/fragment_cartas" />
+        tools:layout="@layout/fragment_cartas">
+
+        <action
+            android:id="@+id/action_cartasFragment_to_pedidosFragment"
+            app:destination="@id/pedidosFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/pedidosFragment"
+        android:name="com.example.magifinal.Pedidos.PedidosFragment"
+        tools:layout="@layout/fragment_pedidos" />
+
+
 </navigation>

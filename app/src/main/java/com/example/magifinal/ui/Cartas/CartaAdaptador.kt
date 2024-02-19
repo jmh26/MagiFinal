@@ -1,9 +1,8 @@
-package com.example.magifinal
+package com.example.magifinal.ui.Cartas
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
-import android.preference.PreferenceManager
 import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,13 +11,14 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.ImageView
-import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.magifinal.Pedidos.Pedido
+import com.example.magifinal.R
+import com.example.magifinal.Utilidades
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -82,11 +82,11 @@ class CartaAdaptador (private val listaCartas: MutableList<Carta>): RecyclerView
         return CartaViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: CartaAdaptador.CartaViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CartaViewHolder, position: Int) {
         val cartaAct = listaCartasFiltrada[position]
         holder.nombre.text = cartaAct.nombre
         holder.categoria.text = "Categoria: "+ cartaAct.categoria
-        holder.precio.text ="Precio: " +  cartaAct.precio
+        holder.precio.text ="Precio: " +  cartaAct.precio + " €"
         holder.stock.text = "Stock: " + cartaAct.stock
 
 
@@ -121,7 +121,7 @@ class CartaAdaptador (private val listaCartas: MutableList<Carta>): RecyclerView
 
 
 
-        Log.d("Adaptador", "Valor de tipoCuenta: $esAdmin")
+
         if (esAdmin) {
             holder.editar.visibility = View.VISIBLE
             holder.pedir.visibility = View.GONE
@@ -154,18 +154,25 @@ class CartaAdaptador (private val listaCartas: MutableList<Carta>): RecyclerView
 
 
         } else {
-            holder.editar.visibility = View.GONE
-            holder.eliminar.visibility = View.GONE
             holder.pedir.setOnClickListener {
                 val db_ref = FirebaseDatabase.getInstance().reference
                 val user = FirebaseAuth.getInstance().currentUser
-                val id = db_ref.push().key
+                val idPedido = db_ref.child("Tienda").child("reservas_carta").push().key // Genera un ID único para el pedido
                 val stock = cartaAct.stock?.toIntOrNull()
                 if (stock != null && stock > 0) {
                     val newStock = (stock - 1).toString()
                     cartaAct.stock = newStock
-                    db_ref.child("Tienda").child("reservas_carta").child(id!!)
-                        .setValue(cartaAct)
+                    val pedido = Pedido(
+                        id = idPedido, // Usa el ID del pedido
+                        nombre = cartaAct.nombre,
+                        precio = cartaAct.precio,
+                        imagen = cartaAct.imagen,
+                        estado = "en preparación",
+                        clienteID = user?.uid,
+                        cartaID = cartaAct.id
+                    )
+                    db_ref.child("Tienda").child("reservas_carta").child(idPedido!!) // Usa el ID del pedido
+                        .setValue(pedido)
                     db_ref.child("Tienda").child("Cartas").child(cartaAct.id!!).child("stock")
                         .setValue(newStock)
                 } else {

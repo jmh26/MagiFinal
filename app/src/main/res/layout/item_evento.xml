@@ -10,44 +10,50 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/item_editarCarta"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/baseline_edit_24"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_margin="30dp">
 
-        </ImageView>
+
+
 
         <ImageView
-            android:id="@+id/item_eliminarCarta"
+            android:id="@+id/item_eliminarEvento"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/baseline_delete_24"
-            app:layout_constraintStart_toEndOf="@id/item_editarCarta"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="25dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="40dp"
+
             android:clickable="true">
 
         </ImageView>
 
+        <TextView
+            android:id="@+id/item_estadoEvento"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="Estado"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@id/item_imagenEvento">
+
+        </TextView>
 
         <ImageView
-            android:id="@+id/item_pedirCarta"
-            android:layout_width="60dp"
-            android:layout_height="70dp"
-            android:src="@drawable/baseline_add_shopping_cart_24"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/item_apuntarseEvento"
+            android:src="@drawable/baseline_add_24"
+            android:layout_margin="20dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_margin="30dp"
-            >
+            app:layout_constraintTop_toTopOf="parent">
 
         </ImageView>
+
+
         <ImageView
-            android:id="@+id/item_imagenCarta"
+            android:id="@+id/item_imagenEvento"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:src="@drawable/baseline_image_24"
@@ -61,54 +67,69 @@
 
 
         <TextView
-            android:id="@+id/item_nombreCarta"
+            android:id="@+id/item_nombreEvento"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nombre"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/item_imagenCarta"
+            app:layout_constraintTop_toBottomOf="@id/item_imagenEvento"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="20dp"
             android:textStyle="bold"
             android:textColor="@color/black"
             />
 
+
+
         <TextView
-            android:id="@+id/item_categoriaCarta"
+            android:id="@+id/item_fecha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Categoria"
-            android:layout_marginStart="40dp"
+            android:text="Fecha"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/item_nombreCarta"
-            android:layout_marginTop="10dp">
+            app:layout_constraintTop_toBottomOf="@id/item_nombreEvento"
+            android:layout_margin="30dp">
 
         </TextView>
 
         <TextView
-            android:id="@+id/item_precioCarta"
+            android:id="@+id/item_precioEvento"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="30sp"
             android:text="Precio"
-            android:layout_marginEnd="30dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/item_nombreCarta"
-            android:layout_marginTop="10dp">
+            app:layout_constraintStart_toStartOf="parent">
 
         </TextView>
 
         <TextView
-            android:id="@+id/item_stockCarta"
+            android:id="@+id/item_aforoActual"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Stock"
-            app:layout_constraintTop_toBottomOf="@id/item_categoriaCarta"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="20dp">
+            android:text="AforoActual"
+            android:layout_marginLeft="80dp"
+
+            app:layout_constraintEnd_toStartOf="@id/item_aforoMaximo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
 
         </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/item_aforoMaximo"
+            android:text="AforoMaximo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+        </TextView>
+
+
+
+
 
 
 

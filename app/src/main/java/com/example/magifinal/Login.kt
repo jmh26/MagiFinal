@@ -13,7 +13,7 @@ import androidx.core.content.ContextCompat.startActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
-private lateinit var auth: FirebaseAuth
+lateinit var auth: FirebaseAuth
 private var user: FirebaseUser?=null
 private lateinit var etEmail: EditText
 private lateinit var etContra: EditText

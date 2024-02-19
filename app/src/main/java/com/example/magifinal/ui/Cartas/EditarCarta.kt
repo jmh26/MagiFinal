@@ -1,4 +1,4 @@
-package com.example.magifinal
+package com.example.magifinal.ui.Cartas
 
 import android.content.Intent
 import android.net.Uri
@@ -14,6 +14,9 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.example.magifinal.HomeAdmin
+import com.example.magifinal.R
+import com.example.magifinal.Utilidades
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -67,7 +70,11 @@ class EditarCarta: AppCompatActivity(),
         precio.setText(pojo_carta.precio.toString())
         stock.setText(pojo_carta.stock.toString())
 
-        Glide.with(applicationContext).load(pojo_carta.imagen).apply(Utilidades.opcionesGlide(applicationContext))
+        Glide.with(applicationContext).load(pojo_carta.imagen).apply(
+            Utilidades.opcionesGlide(
+                applicationContext
+            )
+        )
             .transition(Utilidades.transicion).into(imagen)
 
 

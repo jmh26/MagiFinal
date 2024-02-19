@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -38,9 +39,9 @@
             android:name=".Registro"
             android:exported="false" />
 
-        <activity android:name=".AnadirCarta"
+        <activity android:name=".ui.Cartas.AnadirCarta"
             android:exported="false" />
-        <activity android:name=".EditarCarta"
+        <activity android:name=".ui.Cartas.EditarCarta"
             android:exported="false" />
     </application>
 
